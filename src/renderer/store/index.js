@@ -82,22 +82,24 @@ export default new Vuex.Store({
 
           const $ = cheerio.load(body)
           const graph = $('svg.js-calendar-graph-svg > g')
-
+          let weekCount = 0
           graph.find('g').each((_, element) => {
-            const weekHistoryData = {
-              week: element.attribs.transform,
-              days: []
-            }
-
-            element.childNodes.forEach(dayOfweek => {
-              if (dayOfweek.name === 'rect') {
-                weekHistoryData.days.push({
-                  ...dayOfweek.attribs
-                })
+            if (weekCount++ >= 22) {
+              const weekHistoryData = {
+                week: element.attribs.transform,
+                days: []
               }
-            })
 
-            commit('PUSH_HISTORY_DATA', weekHistoryData)
+              element.childNodes.forEach(dayOfweek => {
+                if (dayOfweek.name === 'rect') {
+                  weekHistoryData.days.push({
+                    ...dayOfweek.attribs
+                  })
+                }
+              })
+
+              commit('PUSH_HISTORY_DATA', weekHistoryData)
+            }
           })
 
           let month = 0
