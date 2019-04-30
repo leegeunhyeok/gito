@@ -20,4 +20,9 @@ html, body, #app {
   margin: 0;
   padding: 0;
 }
+
+#app {
+  padding: 10px;
+  box-sizing: border-box;
+}
 </style>
