@@ -19,7 +19,11 @@ export default new Vuex.Store({
   state: {
     userName: '',
     userTheme: '',
-    commitHistory: []
+    commitHistory: [],
+    commitDate: {
+      month: [],
+      weekDay: []
+    }
   },
   mutations: {
     SET_USER_DATA (state, { name, theme, view }) {
@@ -27,15 +31,20 @@ export default new Vuex.Store({
       state.userTheme = theme || ''
       state.userView = view || 'home'
     },
-    CLEAR_COMMIT_HISTORY (state) {
-      state.commitHistory = []
-    },
     PUSH_HISTORY_DATA (state, weekData) {
       state.commitHistory.push(weekData)
+    },
+    SET_COMMIT_DATE (state, { key, data }) {
+      state.commitDate[key].push(data)
     },
     SET_ERROR_MESSAGE (state, { message, detail }) {
       state.error = message
       state.errorDetail = detail
+    },
+    CLEAR_COMMIT_HISTORY (state) {
+      state.commitHistory = []
+      state.commitDate.month = []
+      state.commitDate.weekDay = []
     }
   },
   actions: {
@@ -95,10 +104,10 @@ export default new Vuex.Store({
           graph.find('text').each((_, element) => {
             let data = element.firstChild.data
             if (month < 12) {
-              console.log('Month: ' + data)
+              commit('SET_COMMIT_DATE', { key: 'month', data })
               month++
             } else {
-              console.log('Weekday: ' + data)
+              commit('SET_COMMIT_DATE', { key: 'weekDay', data })
             }
           })
         })
