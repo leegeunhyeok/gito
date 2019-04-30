@@ -28,7 +28,8 @@ function createWindow () {
     transparent: true,
     useContentSize: true,
     resizable: false,
-    maximizable: false
+    maximizable: false,
+    acceptFirstMouse: true
   })
 
   mainWindow.loadURL(winURL)

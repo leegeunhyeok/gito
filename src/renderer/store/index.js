@@ -27,6 +27,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    SET_USER_NAME (state, name) {
+      state.userName = name
+    },
     SET_USER_DATA (state, { name, theme, view }) {
       state.userName = name || ''
       state.userTheme = theme || ''
@@ -116,6 +119,7 @@ export default new Vuex.Store({
               commit('SET_COMMIT_DATE', { key: 'weekDay', data })
             }
           })
+          commit('SET_VIEW', 'home')
         })
       } else {
         commit('SET_VIEW', 'setting')

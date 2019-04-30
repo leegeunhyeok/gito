@@ -5,7 +5,7 @@
       <div class="week" v-for="(week, i) of history"
         :key="i"
       >
-        <span class="day" v-for="(day, j) of week.days"
+        <span class="day ignore-drag" v-for="(day, j) of week.days"
           :key="j"
         >
         </span>
@@ -61,6 +61,7 @@ export default {
   text-align: center;
 
   .graph-wrap {
+    -webkit-app-region: no-drag;
 
     .week {
       float: left;
