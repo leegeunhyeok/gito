@@ -20,9 +20,15 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 563,
+    title: 'Gito',
+    width: 400,
+    height: 150,
+    frame: false,
+    titleBarStyle: 'hidden',
+    transparent: true,
     useContentSize: true,
-    width: 1000
+    resizable: false,
+    maximizable: false
   })
 
   mainWindow.loadURL(winURL)
