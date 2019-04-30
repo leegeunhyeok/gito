@@ -6,7 +6,10 @@
 
 <script>
   export default {
-    name: 'gito'
+    name: 'gito',
+    created () {
+      this.$store.dispatch('GET_COMMIT_HISTORY')
+    }
   }
 </script>
 

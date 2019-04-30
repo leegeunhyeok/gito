@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import request from 'request'
+import cheerio from 'cheerio'
 
 Vue.use(Vuex)
 
@@ -9,7 +10,9 @@ const STORAGE_TAG = 'v1'
 const DEFAULT_DATA = {
   name: '',
   theme: 'default',
-  view: 'home'
+  view: 'home',
+  error: '',
+  errorDetail: ''
 }
 
 export default new Vuex.Store({
@@ -26,6 +29,13 @@ export default new Vuex.Store({
     },
     CLEAR_COMMIT_HISTORY (state) {
       state.commitHistory = []
+    },
+    PUSH_HISTORY_DATA (state, weekData) {
+      state.commitHistory.push(weekData)
+    },
+    SET_ERROR_MESSAGE (state, { message, detail }) {
+      state.error = message
+      state.errorDetail = detail
     }
   },
   actions: {
@@ -50,12 +60,47 @@ export default new Vuex.Store({
       }
     },
     GET_COMMIT_HISTORY ({ state, commit }) {
-      if (state.userName) {
-        request.get(`https://github.com/${state.userName}`, (err, _, body) => {
+      if (!state.userName) {
+        commit('CLEAR_COMMIT_HISTORY')
+        request.get(`https://github.com/${'leegeunhyeok'}`, (err, _, body) => {
           if (err) {
+            commit('SET_ERROR_MESSAGE', {
+              message: 'Can not get github page data',
+              detail: err.toString()
+            })
             return
           }
-          console.log(body)
+
+          const $ = cheerio.load(body)
+          const graph = $('svg.js-calendar-graph-svg > g')
+
+          graph.find('g').each((_, element) => {
+            const weekHistoryData = {
+              week: element.attribs.transform,
+              days: []
+            }
+
+            element.childNodes.forEach(dayOfweek => {
+              if (dayOfweek.name === 'rect') {
+                weekHistoryData.days.push({
+                  ...dayOfweek.attribs
+                })
+              }
+            })
+
+            commit('PUSH_HISTORY_DATA', weekHistoryData)
+          })
+
+          let month = 0
+          graph.find('text').each((_, element) => {
+            let data = element.firstChild.data
+            if (month < 12) {
+              console.log('Month: ' + data)
+              month++
+            } else {
+              console.log('Weekday: ' + data)
+            }
+          })
         })
       }
     }
