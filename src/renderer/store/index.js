@@ -10,7 +10,7 @@ const STORAGE_TAG = 'v1'
 const DEFAULT_DATA = {
   name: '',
   theme: 'default',
-  view: 'home',
+  view: 'setting',
   error: '',
   errorDetail: ''
 }
@@ -19,6 +19,7 @@ export default new Vuex.Store({
   state: {
     userName: '',
     userTheme: '',
+    userView: '',
     commitHistory: [],
     commitDate: {
       month: [],
@@ -29,10 +30,10 @@ export default new Vuex.Store({
     SET_USER_DATA (state, { name, theme, view }) {
       state.userName = name || ''
       state.userTheme = theme || ''
-      state.userView = view || 'home'
+      state.userView = view || 'setting'
     },
-    PUSH_HISTORY_DATA (state, weekData) {
-      state.commitHistory.push(weekData)
+    SET_VIEW (state, view) {
+      state.userView = view
     },
     SET_COMMIT_DATE (state, { key, data }) {
       state.commitDate[key].push(data)
@@ -40,6 +41,9 @@ export default new Vuex.Store({
     SET_ERROR_MESSAGE (state, { message, detail }) {
       state.error = message
       state.errorDetail = detail
+    },
+    PUSH_HISTORY_DATA (state, weekData) {
+      state.commitHistory.push(weekData)
     },
     CLEAR_COMMIT_HISTORY (state) {
       state.commitHistory = []
@@ -50,8 +54,8 @@ export default new Vuex.Store({
   actions: {
     LOAD_USER_DATA ({ commit }) {
       try {
-        const data = JSON.parse(localStorage.getItem(STORAGE_TAG) || 'null')
-        commit('SET_USER_DATA', data)
+        const data = JSON.parse(localStorage.getItem(STORAGE_TAG))
+        commit('SET_USER_DATA', data || DEFAULT_DATA)
       } catch (e) {
         commit('SET_USER_DATA', DEFAULT_DATA)
       }
@@ -69,9 +73,9 @@ export default new Vuex.Store({
       }
     },
     GET_COMMIT_HISTORY ({ state, commit }) {
-      if (!state.userName) {
+      if (state.userName) {
         commit('CLEAR_COMMIT_HISTORY')
-        request.get(`https://github.com/${'leegeunhyeok'}`, (err, _, body) => {
+        request.get(`https://github.com/${state.userName}`, (err, _, body) => {
           if (err) {
             commit('SET_ERROR_MESSAGE', {
               message: 'Can not get github page data',
@@ -113,6 +117,8 @@ export default new Vuex.Store({
             }
           })
         })
+      } else {
+        commit('SET_VIEW', 'setting')
       }
     }
   },

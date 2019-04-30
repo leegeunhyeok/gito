@@ -7,8 +7,23 @@
 <script>
   export default {
     name: 'gito',
+    computed: {
+      view () {
+        return this.$store.state.userView
+      }
+    },
+    watch: {
+      view () {
+        this.changeView(this.view)
+      }
+    },
     created () {
       this.$store.dispatch('GET_COMMIT_HISTORY')
+    },
+    methods: {
+      changeView (path) {
+        this.$router.push({ path })
+      }
     }
   }
 </script>
