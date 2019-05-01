@@ -38,6 +38,7 @@ export default {
     }
   },
   created () {
+    this.$store.dispatch('LOAD_USER_DATA')
     this.$store.dispatch('GET_COMMIT_HISTORY')
   },
   methods: {

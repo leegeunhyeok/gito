@@ -23,6 +23,7 @@ export default new Vuex.Store({
       month: [],
       weekDay: []
     },
+    loading: true,
     errorCount: 0,
     error: '',
     errorDetail: ''
@@ -41,6 +42,9 @@ export default new Vuex.Store({
     },
     SET_COMMIT_DATE (state, { key, data }) {
       state.commitDate[key].push(data)
+    },
+    SET_LOADING_STATUS (state, status) {
+      state.loading = status
     },
     SET_ERROR_MESSAGE (state, { message, detail }) {
       state.errorCount++
@@ -77,9 +81,11 @@ export default new Vuex.Store({
         localStorage.setItem(STORAGE_TAG, JSON.stringify(DEFAULT_DATA))
       }
     },
-    GET_COMMIT_HISTORY ({ state, commit }) {
+    GET_COMMIT_HISTORY ({ state, commit, dispatch }) {
       if (state.userName) {
+        commit('SET_LOADING_STATUS', true)
         commit('CLEAR_COMMIT_HISTORY')
+
         request.get(`https://github.com/${state.userName}`, (err, res, body) => {
           if (err || res.statusCode === 500) {
             commit('SET_ERROR_MESSAGE', {
@@ -129,7 +135,10 @@ export default new Vuex.Store({
               commit('SET_COMMIT_DATE', { key: 'weekDay', data })
             }
           })
+
+          dispatch('SAVE_USER_DATA')
           commit('SET_VIEW', 'home')
+          commit('SET_LOADING_STATUS', false)
         })
       } else {
         commit('SET_VIEW', 'setting')

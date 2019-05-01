@@ -25,13 +25,9 @@ export default {
   components: {
     Loading
   },
-  data () {
-    return {
-      loading: false
-    }
-  },
   computed: {
     ...mapState({
+      loading: state => state.loading,
       history: state => state.commitHistory
     })
   },
