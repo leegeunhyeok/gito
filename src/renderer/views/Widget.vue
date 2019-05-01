@@ -1,5 +1,5 @@
 <template>
-  <div id="widget">
+  <div id="widget" @dblclick="refreshCommitHistory">
     <Loading v-if="loading"/>
     <div class="graph-wrap">
       <div class="week" v-for="(week, i) of history"
@@ -35,12 +35,9 @@ export default {
       history: state => state.commitHistory
     })
   },
-  mounted () {
-    this.createCommitGraph()
-  },
   methods: {
-    createCommitGraph () {
-      // TODO: Create graph canvas
+    refreshCommitHistory () {
+      this.$store.dispatch('GET_COMMIT_HISTORY')
     }
   }
 }
