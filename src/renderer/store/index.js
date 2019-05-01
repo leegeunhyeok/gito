@@ -78,11 +78,19 @@ export default new Vuex.Store({
     GET_COMMIT_HISTORY ({ state, commit }) {
       if (state.userName) {
         commit('CLEAR_COMMIT_HISTORY')
-        request.get(`https://github.com/${state.userName}`, (err, _, body) => {
-          if (err) {
+        request.get(`https://github.com/${state.userName}`, (err, res, body) => {
+          if (err || res.statusCode === 500) {
             commit('SET_ERROR_MESSAGE', {
               message: 'Can not get github page data',
               detail: err.toString()
+            })
+            return
+          }
+
+          if (res.statusCode === 404) {
+            commit('SET_ERROR_MESSAGE', {
+              message: `${state.userName} user not found`,
+              detail: '404 Error'
             })
             return
           }
