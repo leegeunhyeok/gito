@@ -41,7 +41,18 @@ export default {
     this.$store.dispatch('LOAD_USER_DATA')
     this.$store.dispatch('GET_COMMIT_HISTORY')
   },
+  mounted () {
+    window.addEventListener('keydown', this.globalListner)
+  },
+  beforeDestroy () {
+    window.removeEventListener('keydown', this.globalListner)
+  },
   methods: {
+    globalListner (event) {
+      if (event.key === 'Escape') {
+        this.changeView('setting')
+      }
+    },
     changeView (path) {
       this.$router.push({ path })
     },
