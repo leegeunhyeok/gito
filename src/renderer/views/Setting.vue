@@ -27,6 +27,16 @@ export default {
       checking: false
     }
   },
+  computed: {
+    errorCount () {
+      return this.$store.state.errorCount
+    }
+  },
+  watch: {
+    errorCount () {
+      this.checking = false
+    }
+  },
   methods: {
     userCheck () {
       if (this.userName) {

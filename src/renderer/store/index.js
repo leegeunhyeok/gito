@@ -10,9 +10,7 @@ const STORAGE_TAG = 'v1'
 const DEFAULT_DATA = {
   name: '',
   theme: 'default',
-  view: 'setting',
-  error: '',
-  errorDetail: ''
+  view: 'setting'
 }
 
 export default new Vuex.Store({
@@ -24,7 +22,10 @@ export default new Vuex.Store({
     commitDate: {
       month: [],
       weekDay: []
-    }
+    },
+    errorCount: 0,
+    error: '',
+    errorDetail: ''
   },
   mutations: {
     SET_USER_NAME (state, name) {
@@ -42,6 +43,7 @@ export default new Vuex.Store({
       state.commitDate[key].push(data)
     },
     SET_ERROR_MESSAGE (state, { message, detail }) {
+      state.errorCount++
       state.error = message
       state.errorDetail = detail
     },
