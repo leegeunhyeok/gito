@@ -7,6 +7,7 @@
       >
         <span class="day ignore-drag" v-for="(day, j) of week.days"
           :key="j"
+          :style="{ backgroundColor: day.fill }"
         >
         </span>
       </div>
@@ -71,7 +72,6 @@ export default {
         float: left;
         width: 8px;
         height: 8px;
-        background-color: green;
         margin: 1px;
       }
     }
