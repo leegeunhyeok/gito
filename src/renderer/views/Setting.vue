@@ -67,7 +67,7 @@ export default {
   .spinner-wrap {
     position: absolute;
     display: block;
-    bottom: 16px;
+    bottom: 12px;
     left: 50%;
     color: #aaa;
 

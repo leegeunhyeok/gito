@@ -22,7 +22,7 @@ export default {
 <style lang="scss">
 #error {
   position: fixed;
-  top: 35px;
+  top: 30px;
   left: 50%;
   width: 90%;
   padding: 5px;

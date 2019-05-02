@@ -21,8 +21,8 @@ function createWindow () {
    */
   mainWindow = new BrowserWindow({
     title: 'Gito',
-    width: 400,
-    height: 150,
+    width: 360,
+    height: 130,
     frame: false,
     titleBarStyle: 'hidden',
     transparent: true,
