@@ -50,7 +50,7 @@ export default {
   methods: {
     globalListner (event) {
       if (event.key === 'Escape') {
-        this.changeView('setting')
+        this.$store.commit('SET_VIEW', 'setting')
       }
     },
     changeView (path) {
