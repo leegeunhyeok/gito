@@ -19,6 +19,16 @@ export default new Vuex.Store({
     userTheme: '',
     userView: '',
     commitHistory: [],
+    commitHistoryMeta: {
+      max: {
+        date: '',
+        count: 0
+      },
+      min: {
+        date: '',
+        count: 1
+      }
+    },
     commitDate: {
       month: [],
       weekDay: []
@@ -43,6 +53,10 @@ export default new Vuex.Store({
     SET_COMMIT_DATE (state, { key, data }) {
       state.commitDate[key].push(data)
     },
+    SET_META_DATA (state, { type, date, count }) {
+      state.commitHistoryMeta[type].date = date
+      state.commitHistoryMeta[type].count = count
+    },
     SET_LOADING_STATUS (state, status) {
       state.loading = status
     },
@@ -58,6 +72,8 @@ export default new Vuex.Store({
       state.commitHistory = []
       state.commitDate.month = []
       state.commitDate.weekDay = []
+      state.commitHistoryMeta.max.count = 0
+      state.commitHistoryMeta.min.count = 1
     }
   },
   actions: {
@@ -115,9 +131,18 @@ export default new Vuex.Store({
 
               element.childNodes.forEach(dayOfweek => {
                 if (dayOfweek.name === 'rect') {
-                  weekHistoryData.days.push({
-                    ...dayOfweek.attribs
-                  })
+                  let date = dayOfweek.attribs['data-date']
+                  let count = parseInt(dayOfweek.attribs['data-count'])
+
+                  if (count > state.commitHistoryMeta.max.count) {
+                    commit('SET_META_DATA', { type: 'max', date, count })
+                  }
+
+                  if (count < state.commitHistoryMeta.min.count) {
+                    commit('SET_META_DATA', { type: 'min', date, count })
+                  }
+
+                  weekHistoryData.days.push({ date, count })
                 }
               })
 

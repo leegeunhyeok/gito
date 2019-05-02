@@ -7,7 +7,7 @@
       >
         <span class="day ignore-drag" v-for="(day, j) of week.days"
           :key="j"
-          :style="{ backgroundColor: day.fill }"
+          :style="{ backgroundColor: getColor(day.count) }"
         >
         </span>
       </div>
@@ -18,6 +18,7 @@
 <script>
 import { mapState } from 'vuex'
 
+import GET_COLOR_THEME from '@/common/theme.js'
 import Loading from '@/components/Loading'
 
 export default {
@@ -28,12 +29,23 @@ export default {
   computed: {
     ...mapState({
       loading: state => state.loading,
-      history: state => state.commitHistory
+      history: state => state.commitHistory,
+      historyMeta: state => state.commitHistoryMeta,
+      userTheme: state => state.userTheme
     })
   },
   methods: {
     refreshCommitHistory () {
       this.$store.dispatch('GET_COMMIT_HISTORY')
+    },
+    getColor (commitCount) {
+      const max = this.historyMeta.max.count
+      const idx = parseInt(commitCount / (max / 4)) + 1
+      if (commitCount === 0) {
+        return GET_COLOR_THEME(this.userTheme).color[0]
+      } else {
+        return GET_COLOR_THEME(this.userTheme).color[idx >= 4 ? 4 : idx]
+      }
     }
   }
 }
