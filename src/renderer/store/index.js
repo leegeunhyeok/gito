@@ -4,20 +4,21 @@ import Vuex from 'vuex'
 import request from 'request'
 import cheerio from 'cheerio'
 
+import Themes from '@/common/theme'
+
 Vue.use(Vuex)
 
 const STORAGE_TAG = 'v1'
 const DEFAULT_DATA = {
   name: '',
-  theme: 'default',
-  view: 'setting'
+  theme: 0
 }
 
 export default new Vuex.Store({
   state: {
     userName: '',
-    userTheme: '',
-    userView: '',
+    userTheme: 0,
+    userView: 'home',
     commitHistory: [],
     commitHistoryMeta: {
       max: {
@@ -42,10 +43,12 @@ export default new Vuex.Store({
     SET_USER_NAME (state, name) {
       state.userName = name
     },
-    SET_USER_DATA (state, { name, theme, view }) {
+    SET_USER_THEME (state, theme) {
+      state.userTheme = theme
+    },
+    SET_USER_DATA (state, { name, theme }) {
       state.userName = name || ''
-      state.userTheme = theme || ''
-      state.userView = view || 'setting'
+      state.userTheme = theme || 0
     },
     SET_VIEW (state, view) {
       state.userView = view
@@ -89,8 +92,7 @@ export default new Vuex.Store({
       try {
         const data = {
           name: state.userName,
-          theme: state.userTheme,
-          view: state.userView
+          theme: state.userTheme
         }
         localStorage.setItem(STORAGE_TAG, JSON.stringify(data))
       } catch (e) {
@@ -170,6 +172,12 @@ export default new Vuex.Store({
       } else {
         commit('SET_VIEW', 'setting')
       }
+    },
+    CHANGE_THEME ({ state, commit, dispatch }) {
+      let index = Themes.length <= state.userTheme + 1
+        ? 0 : state.userTheme + 1
+      commit('SET_USER_THEME', index)
+      dispatch('SAVE_USER_DATA')
     }
   },
   strict: process.env.NODE_ENV !== 'production'

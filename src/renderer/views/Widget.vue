@@ -18,7 +18,7 @@
 <script>
 import { mapState } from 'vuex'
 
-import GET_COLOR_THEME from '@/common/theme.js'
+import Themes from '@/common/theme.js'
 import Loading from '@/components/Loading'
 
 export default {
@@ -42,9 +42,9 @@ export default {
       const max = this.historyMeta.max.count
       const idx = parseInt(commitCount / (max / 4)) + 1
       if (commitCount === 0) {
-        return GET_COLOR_THEME(this.userTheme).color[0]
+        return Themes[this.userTheme][0]
       } else {
-        return GET_COLOR_THEME(this.userTheme).color[idx >= 4 ? 4 : idx]
+        return Themes[this.userTheme][idx >= 4 ? 4 : idx]
       }
     }
   }

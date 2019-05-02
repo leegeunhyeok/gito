@@ -51,6 +51,9 @@ export default {
     globalListner (event) {
       if (event.key === 'Escape') {
         this.$store.commit('SET_VIEW', 'setting')
+      } else if (event.keyCode === 84) {
+        // T key
+        this.$store.dispatch('CHANGE_THEME')
       }
     },
     changeView (path) {
