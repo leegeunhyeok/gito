@@ -18,7 +18,7 @@ export default new Vuex.Store({
   state: {
     userName: '',
     userTheme: 0,
-    userView: 'home',
+    userView: '',
     commitHistory: [],
     commitHistoryMeta: {
       max: {

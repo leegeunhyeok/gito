@@ -11,25 +11,37 @@
         placeholder="username"
       >
       <button class="ignore-drag"
+        :style="buttonStyle"
         :disabled="checking"
         @click="userCheck"
+        @mouseenter="hover = true"
+        @mouseleave="hover = false"
       >+</button>
     </div>
   </div>
 </template>
 
 <script>
+import Themes from '@/common/theme'
+
 export default {
   name: 'setting-view',
   data () {
     return {
       userName: '',
-      checking: false
+      checking: false,
+      hover: false
     }
   },
   computed: {
     errorCount () {
       return this.$store.state.errorCount
+    },
+    buttonStyle () {
+      let currentTheme = Themes[this.$store.state.userTheme]
+      return {
+        backgroundColor: this.hover ? currentTheme[3] : currentTheme[2]
+      }
     }
   },
   watch: {
@@ -107,17 +119,12 @@ export default {
     border: none;
     border-radius: .5rem;
     color: #fff;
-    background-color: dodgerblue;
     -webkit-transition: .3s;
             transition: .3s;
 
-    &:hover {
-      background-color: #125699;
-    }
-
     &:disabled {
       cursor: not-allowed;
-      background-color: #aaa;
+      background-color: #aaa !important;
     }
   }
 }
