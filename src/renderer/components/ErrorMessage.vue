@@ -22,8 +22,9 @@ export default {
 <style lang="scss">
 #error {
   position: fixed;
-  top: 30px;
+  top: 35px;
   left: 50%;
+  width: 90%;
   padding: 5px;
   z-index: 9999;
   box-sizing: border-box;

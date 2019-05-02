@@ -104,6 +104,7 @@ export default new Vuex.Store({
 
         request.get(`https://github.com/${state.userName}`, (err, res, body) => {
           if (err || res.statusCode === 500) {
+            commit('SET_VIEW', 'setting')
             commit('SET_ERROR_MESSAGE', {
               message: 'Can not get github page data',
               detail: err.toString()
@@ -112,6 +113,7 @@ export default new Vuex.Store({
           }
 
           if (res.statusCode === 404) {
+            commit('SET_VIEW', 'setting')
             commit('SET_ERROR_MESSAGE', {
               message: `${state.userName} user not found`,
               detail: '404 Error'
