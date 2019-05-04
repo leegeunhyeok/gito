@@ -31,6 +31,9 @@
 
 - 🆔 Change user ID
   - Press `ESCAPE` key
+  
+## Development
+[Electron](https://electronjs.org) with [Vue.js](https://vuejs.org)!
 
 #### Build Setup
 
