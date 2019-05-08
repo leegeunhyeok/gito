@@ -6,12 +6,22 @@
         :key="i"
       >
         <span class="day ignore-drag" v-for="(day, j) of week.days"
+          @mouseover="showCommitDetail(day)"
+          @mouseleave="hideCommitDetail"
           :key="j"
           :style="{ backgroundColor: getColor(day.count) }"
         >
         </span>
       </div>
     </div>
+    <transition name="fade" mode="out-in">
+      <div class="commit-detail"
+        v-if="showDetail">
+        <b :style="{ color: getColor(commitCount) }"
+        >{{ computedCommitCount }} contributions</b>
+        on {{ commitDate }}
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -26,7 +36,17 @@ export default {
   components: {
     Loading
   },
+  data () {
+    return {
+      commitCount: '',
+      commitDate: '',
+      showDetail: false
+    }
+  },
   computed: {
+    computedCommitCount () {
+      return this.commitCount || 'No'
+    },
     ...mapState({
       loading: state => state.loading,
       history: state => state.commitHistory,
@@ -46,6 +66,16 @@ export default {
       } else {
         return Themes[this.userTheme][idx >= 4 ? 4 : idx]
       }
+    },
+    showCommitDetail (detail) {
+      this.commitCount = detail.count
+      this.commitDate = detail.date.replace(/-/g, '.')
+      this.showDetail = true
+    },
+    hideCommitDetail () {
+      this.commitCount = ''
+      this.commitDate = ''
+      this.showDetail = false
     }
   }
 }
@@ -81,5 +111,20 @@ export default {
       }
     }
   }
+
+  .commit-detail {
+    position: absolute;
+    bottom: 3px;
+    color: #aaa;
+    font-size: .9rem;
+  }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>
