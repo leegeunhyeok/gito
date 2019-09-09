@@ -1,6 +1,6 @@
 
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/26512984/56975143-240e3000-6bab-11e9-981c-3c3afedc5b20.png">
+  <img src="https://user-images.githubusercontent.com/26512984/56975143-240e3000-6bab-11e9-981c-3c3afedc5b20.png" width="240px">
 
   Simple github commit history widget for `PC`
 
