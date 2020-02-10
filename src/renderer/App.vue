@@ -9,6 +9,7 @@
 
 <script>
 import ErrorMessage from '@/components/ErrorMessage'
+import os from 'os'
 
 export default {
   name: 'gito',
@@ -38,6 +39,10 @@ export default {
     }
   },
   created () {
+    document.documentElement.setAttribute(
+      'data-win32',
+      os.platform !== 'win32'
+    )
     this.$store.dispatch('LOAD_USER_DATA')
     this.$store.dispatch('GET_COMMIT_HISTORY')
   },
@@ -80,7 +85,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 html, body, #app {
   width: 100%;
   height: 100%;
@@ -95,6 +100,10 @@ html, body, #app {
                 , 'Apple Color Emoji'
                 , 'Segoe UI Emoji'
                 , 'Segoe UI Symbol';
+
+  [data-win32="true"] & {
+    background-color: #fff;
+  }
 }
 
 #app {
