@@ -48,10 +48,6 @@ export default {
       const setOSTheme = () => {
         let theme = nativeTheme.shouldUseDarkColors ? 'dark' : 'light'
         this.$store.commit('CURRENT_THEME', theme)
-
-        if ('$updateTheme' in this) {
-          this.$updateTheme()
-        }
       }
 
       systemPreferences.subscribeNotification(
@@ -72,6 +68,9 @@ export default {
     globalListner (event) {
       if (event.key === 'Escape') {
         this.$store.commit('SET_VIEW', 'setting')
+      } else if ((event.ctrlKey || event.metaKey) && event.keyCode === 68) {
+        // (Ctrl or CMD) + D key
+        this.$store.dispatch('TOGGLE_DARKMODE')
       } else if ((event.ctrlKey || event.metaKey) && event.keyCode === 84) {
         // (Ctrl or CMD) + T key
         this.$store.dispatch('CHANGE_THEME')

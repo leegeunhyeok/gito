@@ -6,6 +6,10 @@
   --background-color: #303437;
 }
 
+* {
+  transition: background-color .4s;
+}
+
 @mixin content {
   position: relative;
   display: flex;

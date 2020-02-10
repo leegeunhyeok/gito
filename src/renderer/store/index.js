@@ -80,8 +80,11 @@ export default new Vuex.Store({
       state.commitHistoryMeta.min.count = 1
     },
     CURRENT_THEME (state, theme) {
-      state.theme = theme
+      state.theme = theme || 'light'
       localStorage.setItem('theme', theme)
+      document.documentElement.setAttribute(
+        'data-theme', state.theme
+      )
     }
   },
   actions: {
@@ -180,6 +183,9 @@ export default new Vuex.Store({
       } else {
         commit('SET_VIEW', 'setting')
       }
+    },
+    TOGGLE_DARKMODE ({ state, commit }) {
+      commit('CURRENT_THEME', state.theme === 'light' ? 'dark' : 'light')
     },
     CHANGE_THEME ({ state, commit, dispatch }) {
       let index = Themes.SCHEME.length <= state.userTheme + 1
