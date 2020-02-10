@@ -1,6 +1,6 @@
 {
   "name": "gito",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "leegeunhyeok <dev.ghlee@gmail.com>",
   "description": "Github commit history widget",
   "license": "MIT",
@@ -20,30 +20,16 @@
   },
   "build": {
     "productName": "Gito",
-    "appId": "me.geundung",
+    "appId": "dev.geundung",
     "directories": {
       "output": "build"
     },
     "files": [
       "dist/electron/**/*"
     ],
-    "dmg": {
-      "contents": [
-        {
-          "x": 410,
-          "y": 150,
-          "type": "link",
-          "path": "/Applications"
-        },
-        {
-          "x": 130,
-          "y": 150,
-          "type": "file"
-        }
-      ]
-    },
     "mac": {
-      "icon": "build/icons/icon.icns"
+      "icon": "build/icons/icon.icns",
+      "target": "pkg"
     },
     "win": {
       "icon": "build/icons/icon.ico",
@@ -85,13 +71,13 @@
     "babili-webpack-plugin": "^0.1.2",
     "cfonts": "^2.1.2",
     "chalk": "^2.4.1",
-    "copy-webpack-plugin": "^4.5.1",
+    "copy-webpack-plugin": "^5.1.1",
     "cross-env": "^5.1.6",
     "css-loader": "^2.1.1",
     "del": "^3.0.0",
     "devtron": "^1.4.0",
     "electron": "^8.0.0",
-    "electron-builder": "^20.19.2",
+    "electron-builder": "^22.3.2",
     "electron-debug": "^1.5.0",
     "electron-devtools-installer": "^2.2.4",
     "eslint": "^4.19.1",
@@ -105,6 +91,7 @@
     "eslint-plugin-standard": "^3.1.0",
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.2.0",
+    "lodash": "^4.17.15",
     "mini-css-extract-plugin": "0.4.0",
     "multispinner": "^0.2.1",
     "node-loader": "^0.6.0",
