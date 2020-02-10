@@ -8,8 +8,8 @@
 </template>
 
 <script>
+import { remote } from 'electron'
 import ErrorMessage from '@/components/ErrorMessage'
-import os from 'os'
 
 export default {
   name: 'gito',
@@ -39,12 +39,28 @@ export default {
     }
   },
   created () {
-    document.documentElement.setAttribute(
-      'data-win32',
-      os.platform !== 'win32'
-    )
     this.$store.dispatch('LOAD_USER_DATA')
     this.$store.dispatch('GET_COMMIT_HISTORY')
+
+    if (process.platform === 'darwin') {
+      const { systemPreferences, nativeTheme } = remote
+
+      const setOSTheme = () => {
+        let theme = nativeTheme.shouldUseDarkColors ? 'dark' : 'light'
+        this.$store.commit('CURRENT_THEME', theme)
+
+        if ('$updateTheme' in this) {
+          this.$updateTheme()
+        }
+      }
+
+      systemPreferences.subscribeNotification(
+        'AppleInterfaceThemeChangedNotification',
+        setOSTheme
+      )
+
+      setOSTheme()
+    }
   },
   mounted () {
     window.addEventListener('keydown', this.globalListner)
@@ -101,8 +117,8 @@ html, body, #app {
                 , 'Segoe UI Emoji'
                 , 'Segoe UI Symbol';
 
-  [data-win32="true"] & {
-    background-color: #fff;
+  [data-win32="false"] & {
+    background-color: var(--background-color);
   }
 }
 

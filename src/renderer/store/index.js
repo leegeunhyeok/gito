@@ -37,7 +37,8 @@ export default new Vuex.Store({
     loading: true,
     errorCount: 0,
     error: '',
-    errorDetail: ''
+    errorDetail: '',
+    theme: 'light'
   },
   mutations: {
     SET_USER_NAME (state, name) {
@@ -77,15 +78,22 @@ export default new Vuex.Store({
       state.commitDate.weekDay = []
       state.commitHistoryMeta.max.count = 0
       state.commitHistoryMeta.min.count = 1
+    },
+    CURRENT_THEME (state, theme) {
+      state.theme = theme
+      localStorage.setItem('theme', theme)
     }
   },
   actions: {
     LOAD_USER_DATA ({ commit }) {
       try {
         const data = JSON.parse(localStorage.getItem(STORAGE_TAG))
+        const theme = localStorage.getItem('theme')
         commit('SET_USER_DATA', data || DEFAULT_DATA)
+        commit('CURRENT_THEME', theme || 'light')
       } catch (e) {
         commit('SET_USER_DATA', DEFAULT_DATA)
+        commit('CURRENT_THEME', 'light')
       }
     },
     SAVE_USER_DATA ({ state }) {
@@ -174,7 +182,7 @@ export default new Vuex.Store({
       }
     },
     CHANGE_THEME ({ state, commit, dispatch }) {
-      let index = Themes.length <= state.userTheme + 1
+      let index = Themes.SCHEME.length <= state.userTheme + 1
         ? 0 : state.userTheme + 1
       commit('SET_USER_THEME', index)
       dispatch('SAVE_USER_DATA')

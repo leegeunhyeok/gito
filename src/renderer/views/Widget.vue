@@ -62,9 +62,11 @@ export default {
       const max = this.historyMeta.max.count
       const idx = parseInt(commitCount / (max / 4)) + 1
       if (commitCount === 0) {
-        return Themes[this.userTheme][0]
+        const color = Themes.SCHEME[this.userTheme][0]
+        return color === '@' ? Themes.DEFAULT[this.$store.state.theme] : color
       } else {
-        return Themes[this.userTheme][idx >= 4 ? 4 : idx]
+        const color = Themes.SCHEME[this.userTheme][idx >= 4 ? 4 : idx]
+        return color === '@' ? Themes.DEFAULT[this.$store.state.theme] : color
       }
     },
     showCommitDetail (detail) {
