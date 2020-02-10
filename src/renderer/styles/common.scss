@@ -1,13 +1,21 @@
 [data-theme^="light"] {
+  --text-color: #303437;
   --background-color: #fff;
+  --secondary-color: #d5d5d5;
 }
 
 [data-theme^="dark"] {
+  --text-color: #fff;
   --background-color: #303437;
+  --secondary-color: #484c50;
 }
 
 * {
   transition: background-color .4s;
+}
+
+*, input {
+  font-family: Dotum,'돋움',Helvetica,"Apple SD Gothic Neo",sans-serif;
 }
 
 @mixin content {

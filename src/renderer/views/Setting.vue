@@ -38,7 +38,7 @@ export default {
       return this.$store.state.errorCount
     },
     buttonStyle () {
-      let currentTheme = Themes[this.$store.state.userTheme]
+      let currentTheme = Themes.SCHEME[this.$store.state.userTheme]
       return {
         backgroundColor: this.hover ? currentTheme[3] : currentTheme[2]
       }
@@ -95,9 +95,12 @@ export default {
   input {
     outline: none;
     border: none;
-    border-radius: .5rem;
-    padding: 5px 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+    border-radius: .4rem;
+    height: 30px;
+    padding: 0 10px;
+    font-size: 1rem;
+    color: var(--text-color);
+    background-color: var(--secondary-color);
     -webkit-transition: .3s;
             transition: .3s;
   }
@@ -105,11 +108,13 @@ export default {
   button {
     cursor: pointer;
     outline: none;
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     border: none;
-    border-radius: .5rem;
+    border-radius: .4rem;
     color: #fff;
+    margin-top: -5px;
+    font-size: 1rem;
     -webkit-transition: .3s;
             transition: .3s;
 

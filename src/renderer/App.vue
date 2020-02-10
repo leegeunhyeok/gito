@@ -67,6 +67,8 @@ export default {
   methods: {
     globalListner (event) {
       if (event.key === 'Escape') {
+        this.$store.commit('SET_USER_NAME', '')
+        this.$store.dispatch('SAVE_USER_DATA')
         this.$store.commit('SET_VIEW', 'setting')
       } else if ((event.ctrlKey || event.metaKey) && event.keyCode === 68) {
         // (Ctrl or CMD) + D key
