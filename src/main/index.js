@@ -29,7 +29,10 @@ function createWindow () {
     useContentSize: true,
     resizable: false,
     maximizable: false,
-    acceptFirstMouse: true
+    acceptFirstMouse: true,
+    webPreferences: {
+      nodeIntegration: true
+    }
   })
 
   mainWindow.loadURL(winURL)
