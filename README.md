@@ -4,7 +4,8 @@
 
   Simple github commit history widget for `PC`
 
-  <img src="https://user-images.githubusercontent.com/26512984/57062702-e66cec80-6cfb-11e9-8938-64b12c617bf7.png">
+  <img src="https://user-images.githubusercontent.com/26512984/81257715-f5088500-906e-11ea-8537-09bfc8457646.png">
+  <img src="https://user-images.githubusercontent.com/26512984/81257709-f33ec180-906e-11ea-9ce0-df4b7a448f94.png">
 
 </div>
 
@@ -31,7 +32,9 @@
 
 - 🆔 Change user ID
   - Press `ESCAPE` key
-  
+
+- 🌚 Darkmode (>=0.0.3)
+
 ## Development
 [Electron](https://electronjs.org) with [Vue.js](https://vuejs.org)!
 
