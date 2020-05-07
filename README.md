@@ -4,8 +4,8 @@
 
   Simple github commit history widget for `PC`
 
-  <img src="https://user-images.githubusercontent.com/26512984/81257715-f5088500-906e-11ea-8537-09bfc8457646.png">
-  <img src="https://user-images.githubusercontent.com/26512984/81257709-f33ec180-906e-11ea-9ce0-df4b7a448f94.png">
+  <img src="https://user-images.githubusercontent.com/26512984/81257715-f5088500-906e-11ea-8537-09bfc8457646.png" width="360">
+  <img src="https://user-images.githubusercontent.com/26512984/81257709-f33ec180-906e-11ea-9ce0-df4b7a448f94.png" width="360">
 
 </div>
 
