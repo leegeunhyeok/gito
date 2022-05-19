@@ -1,7 +1,48 @@
 {
   "name": "gito",
   "version": "0.1.0",
-  "private": true,
+  "scripts": {
+    "start": "concurrently -k \"BROWSER=none yarn start:web\" \"yarn start:electron\"",
+    "build": "yarn build:react && electron-builder",
+    "start:web": "react-scripts start",
+    "start:electron": "wait-on tcp:3000 && electron .",
+    "build:web": "react-scripts build",
+    "build:main": "tsc ./src/main/index.ts",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "build": {
+    "productName": "Gito",
+    "appId": "dev.geundung.gito",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "build/**/*"
+    ],
+    "mac": {
+      "icon": "icons/icon.icns",
+      "target": "pkg"
+    },
+    "win": {
+      "icon": "icons/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ]
+    }
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
@@ -16,17 +57,11 @@
     "typescript": "^4.6.4",
     "web-vitals": "^2.1.4"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "devDependencies": {
+    "concurrently": "^7.2.0",
+    "electron": "^18.2.4",
+    "electron-builder": "^23.0.3",
+    "wait-on": "^6.0.1"
   },
   "browserslist": {
     "production": [
@@ -39,9 +74,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "electron": "^18.2.4",
-    "electron-builder": "^23.0.3"
   }
 }
